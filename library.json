@@ -1,0 +1,25 @@
+{
+  "name": "EIMU_I2C_Client",
+  "version": "1.0.0",
+  "description": "Arduino I2C client library for the Easy IMU (EIMU).",
+  "keywords": [
+    "i2c",
+    "imu",
+    "robotics",
+    "eimu"
+  ],
+  "authors": [
+    {
+      "name": "Samuel Obiagba",
+      "email": "samuel.c.agba@gmail.com",
+      "maintainer": true
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robocre8/EIMU_I2C_Client"
+  },
+  "frameworks": ["arduino"],
+  "platforms": ["espressif8266","espressif32","atmegaavr"],
+  "license": "MIT"
+}
