@@ -9,21 +9,21 @@
 class EIMU_I2C_Client
 {
 public:
+  float dataBuffer[4];
   explicit EIMU_I2C_Client(uint8_t address);
   bool begin(TwoWire &wire=Wire);
 
-  void readQuat(float &w, float &x, float &y, float &z);
-  void readRPY(float &x, float &y, float &z);
-  void readAccGyro(float &ax, float &ay, float &az, float &gx, float &gy, float &gz);
+  void readQuat();
+  void readRPY();
+  void readLinearAcc();
+  void readGyro();
 
-  // void readAcc(float &x, float &y, float &z);
-  void readLinearAcc(float &x, float &y, float &z);
-  void readGyro(float &x, float &y, float &z);
-  // void readMag(float &x, float &y, float &z);
+  // void readAcc();
+  // void readMag();
 
-  void readRPYVariance(float &x, float &y, float &z);
-  void readAccVariance(float &x, float &y, float &z);
-  void readGyroVariance(float &x, float &y, float &z);
+  void readRPYVariance();
+  void readAccVariance();
+  void readGyroVariance();
   
   void setWorldFrameId(int);
   int getWorldFrameId();
@@ -43,7 +43,7 @@ private:
   void read_data1(float &val0);
   void read_data3(float &val0, float &val1, float &val2);
   void read_data4(float &val0, float &val1, float &val2, float &val3);
-  void read_data6(float &val0, float &val1, float &val2, float &val3, float &val4, float &val5);
+  void clearBuffer();
 
   // Serial Protocol Command IDs -------------
   static constexpr uint8_t START_BYTE = 0xBB;

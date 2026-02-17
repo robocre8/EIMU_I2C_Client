@@ -10,12 +10,15 @@ EIMU_I2C_Client KEYWORD1
 
 readQuat  KEYWORD2
 readRPY  KEYWORD2
-readRPYVariance  KEYWORD2
-readAccGyro KEYWORD2
-readAcc  KEYWORD2
-readAccVariance  KEYWORD2
 readGyro  KEYWORD2
+readLinearAcc  KEYWORD2
+
+readRPYVariance  KEYWORD2
+readAccVariance  KEYWORD2
 readGyroVariance  KEYWORD2
+
 setWorldFrameId KEYWORD2
 getWorldFrameId KEYWORD2
 getFilterGain KEYWORD2
+
+dataBuffer KEYWORD2

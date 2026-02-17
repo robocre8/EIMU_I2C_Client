@@ -16,6 +16,7 @@
 uint8_t imuAddress = 104; // i.e 0x68 in HEX
 EIMU_I2C_Client imu(imuAddress);
 
+bool connect_success = false;
 float toRad = 2 * PI / 360;
 float toDeg = 1 / toRad;
 
@@ -30,13 +31,9 @@ void setup()
 
   // start i2c communication
   Wire.begin();
-  imu.begin();
-  
-  // wait for the imu module to fully setup
-  for (int i = 1; i <= 4; i += 1)
-  {
-    delay(1000);
-    Serial.println(i);
+  connect_success = imu.begin(); // wait for about 4 seconds
+  if(!connect_success) {
+    Serial.println("EIMU Connection was not successful. Check connection and Try Again");
   }
 
   // imu.clearDataBuffer();
@@ -57,13 +54,25 @@ void setup()
 void loop()
 {
 
-  if ((millis() - prevSampleTime) >= sampleTime)
+  if (((millis() - prevSampleTime) >= sampleTime) && connect_success)
   {
     /* CODE SHOULD GO IN HERE*/
     float r, p, y, ax, ay, az, gx, gy, gz;
 
-    imu.readRPY(r, p, y);
-    imu.readAccGyro(ax, ay, az, gx, gy, gz);
+    imu.readRPY();
+    r = imu.dataBuffer[0];
+    p = imu.dataBuffer[1];
+    y = imu.dataBuffer[2];
+
+    imu.readLinearAcc();
+    ax = imu.dataBuffer[0];
+    ay = imu.dataBuffer[1];
+    az = imu.dataBuffer[2];
+
+    imu.readGyro();
+    gx = imu.dataBuffer[0];
+    gy = imu.dataBuffer[1];
+    gz = imu.dataBuffer[2];
 
     // Serial.print(r, 4);
     // Serial.print(", ");
