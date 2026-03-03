@@ -13,6 +13,9 @@ readRPY  KEYWORD2
 readGyro  KEYWORD2
 readLinearAcc  KEYWORD2
 
+readAcc  KEYWORD2
+readMag  KEYWORD2
+
 readRPYVariance  KEYWORD2
 readAccVariance  KEYWORD2
 readGyroVariance  KEYWORD2
@@ -20,5 +23,3 @@ readGyroVariance  KEYWORD2
 setWorldFrameId KEYWORD2
 getWorldFrameId KEYWORD2
 getFilterGain KEYWORD2
-
-dataBuffer KEYWORD2

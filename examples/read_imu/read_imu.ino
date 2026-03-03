@@ -16,7 +16,6 @@
 uint8_t imuAddress = 104; // i.e 0x68 in HEX
 EIMU_I2C_Client imu(imuAddress);
 
-bool connect_success = false;
 float toRad = 2 * PI / 360;
 float toDeg = 1 / toRad;
 
@@ -31,9 +30,10 @@ void setup()
 
   // start i2c communication
   Wire.begin();
-  connect_success = imu.begin(); // wait for about 4 seconds
+  bool connect_success = imu.begin(); // wait for about 4 seconds
   if(!connect_success) {
     Serial.println("EIMU Connection was not successful. Check connection and Try Again");
+    while(true);
   }
 
   // imu.clearDataBuffer();
@@ -47,6 +47,8 @@ void setup()
     Serial.println("Reference Frame is East-North-Up (ENU)");
   else if (ref_frame_id == 2)
     Serial.println("Reference Frame is North-East-Down (NED)");
+  else
+    Serial.println("ERROR: Reference Frame not Found");
 
   prevSampleTime = millis();
 }
@@ -54,25 +56,14 @@ void setup()
 void loop()
 {
 
-  if (((millis() - prevSampleTime) >= sampleTime) && connect_success)
+  if ((millis() - prevSampleTime) >= sampleTime)
   {
     /* CODE SHOULD GO IN HERE*/
     float r, p, y, ax, ay, az, gx, gy, gz;
 
-    imu.readRPY();
-    r = imu.dataBuffer[0];
-    p = imu.dataBuffer[1];
-    y = imu.dataBuffer[2];
-
-    imu.readLinearAcc();
-    ax = imu.dataBuffer[0];
-    ay = imu.dataBuffer[1];
-    az = imu.dataBuffer[2];
-
-    imu.readGyro();
-    gx = imu.dataBuffer[0];
-    gy = imu.dataBuffer[1];
-    gz = imu.dataBuffer[2];
+    imu.readRPY(r, p, y);
+    imu.readLinearAcc(ax, ay, az);
+    imu.readGyro(gx, gy, gz);
 
     // Serial.print(r, 4);
     // Serial.print(", ");

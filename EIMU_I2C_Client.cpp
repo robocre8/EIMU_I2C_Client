@@ -153,58 +153,49 @@ void EIMU_I2C_Client::read_data4(float &val0, float &val1, float &val2, float &v
   memcpy(&val3, &buffer[12], sizeof(float));
 }
 
-void EIMU_I2C_Client::readQuat(){
-  clearBuffer();
+void EIMU_I2C_Client::readQuat(float &w, float &x, float &y, float &z){
   send_packet_without_payload(READ_QUAT);
-  read_data4(dataBuffer[0], dataBuffer[1], dataBuffer[2], dataBuffer[3]);
+  read_data4(w, x, y, z);
 }
 
-void EIMU_I2C_Client::readRPY(){
-  clearBuffer();
+void EIMU_I2C_Client::readRPY(float &r, float &p, float &y){
   send_packet_without_payload(READ_RPY);
-  read_data3(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
+  read_data3(r, p, y);
 }
 
-void EIMU_I2C_Client::readLinearAcc(){
-  clearBuffer();
+void EIMU_I2C_Client::readLinearAcc(float &x, float &y, float &z){
   send_packet_without_payload(READ_LIN_ACC);
-  read_data3(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
+  read_data3(x, y, z);
 }
 
-void EIMU_I2C_Client::readGyro(){
-  clearBuffer();
+void EIMU_I2C_Client::readGyro(float &x, float &y, float &z){
   send_packet_without_payload(READ_GYRO);
-  read_data3(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
+  read_data3(x, y, z);
 }
 
-// void EIMU_I2C_Client::readAcc(){
-//   clearBuffer();
-//   send_packet_without_payload(READ_ACC);
-//   read_data3(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
-// }
+void EIMU_I2C_Client::readMag(float &x, float &y, float &z){
+  send_packet_without_payload(READ_MAG);
+  read_data3(x, y, z);
+}
 
-// void EIMU_I2C_Client::readMag(){
-//   clearBuffer();
-//   send_packet_without_payload(READ_MAG);
-//   read_data3(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
-// }
+void EIMU_I2C_Client::readAcc(float &x, float &y, float &z){
+  send_packet_without_payload(READ_ACC);
+  read_data3(x, y, z);
+}
 
-void EIMU_I2C_Client::readRPYVariance(){
-  clearBuffer();
+void EIMU_I2C_Client::readRPYVariance(float &r, float &p, float &y){
   send_packet_without_payload(READ_RPY_VAR);
-  read_data3(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
+  read_data3(r, p, y);
 }
 
-void EIMU_I2C_Client::readAccVariance(){
-  clearBuffer();
-  send_packet_without_payload(READ_ACC_GYRO);
-  read_data3(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
+void EIMU_I2C_Client::readAccVariance(float &x, float &y, float &z){
+  send_packet_without_payload(READ_ACC_VAR);
+  read_data3(x, y, z);
 }
 
-void EIMU_I2C_Client::readGyroVariance(){
-  clearBuffer();
+void EIMU_I2C_Client::readGyroVariance(float &x, float &y, float &z){
   send_packet_without_payload(READ_GYRO_VAR);
-  read_data3(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
+  read_data3(x, y, z);
 }
 
 void EIMU_I2C_Client::setWorldFrameId(int frame_id){
@@ -212,7 +203,7 @@ void EIMU_I2C_Client::setWorldFrameId(int frame_id){
 }
 
 int EIMU_I2C_Client::getWorldFrameId(){
-  float frame_id=3.0;
+  float frame_id = 3.0;
   write_data1(GET_FRAME_ID);
   read_data1(frame_id);
   return (int)frame_id;
@@ -223,22 +214,15 @@ void EIMU_I2C_Client::setFilterGain(float gain){
 }
 
 float EIMU_I2C_Client::getFilterGain(){
-  float gain=0.0;
+  float gain = 0.0;
   write_data1(GET_FILTER_GAIN);
   read_data1(gain);
   return gain;
 }
 
 bool EIMU_I2C_Client::clearDataBuffer(){
-  float res=0.0;
+  float res = 0.0;
   write_data1(CLEAR_DATA_BUFFER);
   read_data1(res);
   return ((int)res == 1);
-}
-
-void EIMU_I2C_Client::clearBuffer()
-{
-  for (int i=0; i<4; i+=1){
-    dataBuffer[i] = 0.0;
-  }
 }
