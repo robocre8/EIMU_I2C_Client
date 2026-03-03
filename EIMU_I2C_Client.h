@@ -13,13 +13,12 @@ public:
   bool begin(TwoWire &wire=Wire);
 
   void readQuat(float &w, float &x, float &y, float &z);
-  void readRPY(float &x, float &y, float &z);
-  void readAccGyro(float &ax, float &ay, float &az, float &gx, float &gy, float &gz);
-
-  // void readAcc(float &x, float &y, float &z);
+  void readRPY(float &r, float &p, float &y);
   void readLinearAcc(float &x, float &y, float &z);
   void readGyro(float &x, float &y, float &z);
-  // void readMag(float &x, float &y, float &z);
+
+  void readAcc(float &x, float &y, float &z);
+  void readMag(float &x, float &y, float &z);
 
   void readRPYVariance(float &x, float &y, float &z);
   void readAccVariance(float &x, float &y, float &z);
@@ -43,7 +42,6 @@ private:
   void read_data1(float &val0);
   void read_data3(float &val0, float &val1, float &val2);
   void read_data4(float &val0, float &val1, float &val2, float &val3);
-  void read_data6(float &val0, float &val1, float &val2, float &val3, float &val4, float &val5);
 
   // Serial Protocol Command IDs -------------
   static constexpr uint8_t START_BYTE = 0xBB;
